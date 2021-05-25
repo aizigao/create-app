@@ -1,14 +1,18 @@
 import chalk from 'chalk'
-import fs from 'fs'
+import fs from 'fs-extra'
 import ncp from 'ncp'
 import path from 'path'
 import { promisify } from 'util'
+import consolidate from 'consolidate'
+import klaw from 'klaw'
 import execa from 'execa'
 import Listr from 'listr'
 import { projectInstall } from 'pkg-install'
+import { getExtFromFilePath, filterFunc } from './utils'
 
 const access = promisify(fs.access)
 const copy = promisify(ncp)
+const hbsRender = consolidate.handlebars
 
 /**
  * 复制项目
@@ -21,6 +25,28 @@ async function copyTemplateFiles(options) {
   })
 }
 
+async function renderTpl(options) {
+  const hbsFiles = []
+  /**
+   * 遍历所有文件
+   */
+  for await (const file of klaw(options.targetDirectory, {
+    filter: filterFunc,
+  })) {
+    const ext = getExtFromFilePath(file.path)
+    if (ext === 'hbs') {
+      hbsFiles.push(file)
+    }
+  }
+  await Promise.all(
+    hbsFiles.map(async (item) => {
+      const renderContent = await hbsRender(item.path, options)
+      await fs.writeFile(item.path.replace(/.hbs$/, ''), renderContent)
+      fs.remove(item.path)
+    })
+  )
+}
+
 /**
  *
  * 初始化git
@@ -31,6 +57,16 @@ async function initGit(options) {
   const result = await execa('git', ['init'], {
     cwd: options.targetDirectory,
   })
+  // .then(() => {
+  //   return execa('git', ['add', '.'], {
+  //     cwd: options.targetDirectory,
+  //   })
+  // })
+  // .then(() => {
+  //   return execa('git', ['commit -m "feat: init project"'], {
+  //     cwd: options.targetDirectory,
+  //   })
+  // })
   if (result.failed) {
     return Promise.reject(new Error('Failed to initialize git'))
   }
@@ -48,11 +84,16 @@ export async function createProject(options) {
   }
 
   const currentFileUrl = import.meta.url
+
+  /**
+   * 模板目录
+   */
   const templateDir = path.resolve(
     new URL(currentFileUrl).pathname,
     '../../templates',
     options.template.toLowerCase()
   )
+
   options.templateDirectory = templateDir
 
   try {
@@ -62,33 +103,34 @@ export async function createProject(options) {
     process.exit(1)
   }
 
-  console.log('Copy project files')
+  console.log(chalk.yellow('配置完成，初始化中'))
 
   const tasks = new Listr([
     {
-      title: 'Copy project files',
+      title: '复制文件',
       task: () => copyTemplateFiles(options),
     },
     {
-      title: 'Initialize git',
+      title: '渲染模板',
+      task: () => renderTpl(options),
+    },
+    {
+      title: '初始化 git',
       task: () => initGit(options),
       enabled: () => options.git,
     },
     {
-      title: 'Install dependencies',
+      title: 'yarn install',
       task: () =>
         projectInstall({
           cwd: options.targetDirectory,
         }),
-      skip: () =>
-        !options.runInstall
-          ? 'Pass --install to automatically install dependencies'
-          : undefined,
+      skip: () => (!options.install ? '跳过 yarn install' : undefined),
     },
   ])
 
   await tasks.run()
 
-  console.log('%s Project ready', chalk.green.bold('DONE'))
+  console.log('%s 创建成功啦啦啦', chalk.green.bold('DONE'))
   return true
 }

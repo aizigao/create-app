@@ -1,7 +1,8 @@
 {
   "name": "@aizigao/create-app",
   "version": "0.0.1",
-  "description": "cli test",
+  "description": "create app presonally",
+  "keywords": ["create app", "template"],
   "main": "src/index.js",
   "bin": {
     "@aizigao/create-app": "bin/create-app",
@@ -13,14 +14,16 @@
     "templates/"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "npm publish --registry https://registry.npmjs.org/ --access public"
   },
-  "author": "",
+  "author": "aizigao",
   "license": "ISC",
   "dependencies": {
     "chalk": "^4.1.1",
     "clear": "^0.1.0",
     "consolidate": "^0.16.0",
+    "dayjs": "^1.10.4",
     "esm": "^3.2.25",
     "execa": "^5.0.0",
     "figlet": "^1.5.0",
@@ -28,6 +31,7 @@
     "fs-extra": "^10.0.0",
     "handlebars": "^4.7.7",
     "inquirer": "^8.1.0",
+    "klaw": "^3.0.0",
     "listr": "^0.14.3",
     "ncp": "^2.0.0",
     "ora": "^5.4.0",

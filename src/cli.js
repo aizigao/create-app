@@ -1,6 +1,7 @@
 import yargs from 'yargs/yargs'
 import inquirer from 'inquirer'
 import chalk from 'chalk'
+import dayjs from 'dayjs'
 import { createProject } from './main'
 import { templateList } from './config'
 
@@ -52,6 +53,20 @@ async function promptForMissingOptions(options) {
     })
   }
 
+  questions.push({
+    type: 'string',
+    name: 'name',
+    message: '项目名称',
+    default: '项目' + '_' + dayjs().format('YYYY_MM_DD'),
+  })
+
+  questions.push({
+    type: 'string',
+    name: 'description',
+    message: '项目描述',
+    default: '由@aizigao/create-app 创建',
+  })
+
   if (!options.git) {
     questions.push({
       type: 'confirm',
@@ -81,5 +96,4 @@ export async function cli(args) {
   let options = parseArgvIntoOptions(args)
   options = await promptForMissingOptions(options)
   await createProject(options)
-  console.log(chalk.green('创建成功 啦啦啦啦'))
 }
