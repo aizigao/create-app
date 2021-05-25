@@ -1,58 +1,53 @@
-import yargs from 'yargs'
+import yargs from 'yargs/yargs'
 import inquirer from 'inquirer'
-import arg from 'arg'
-import { promisify } from 'util'
+import chalk from 'chalk'
 import { createProject } from './main'
+import { templateList } from './config'
 
-import figlet from 'figlet'
+function parseArgvIntoOptions(rawArgs) {
+  const argv =
+    // --
+    yargs(rawArgs)
+      .usage('Usage: $0 [options]')
+      .option('template', {
+        describe: '项目模板名称',
+        alias: 't',
+        type: 'string',
+        choices: templateList,
+      })
+      .option('install', {
+        describe: '初始后立即 npm install',
+        type: 'boolean',
+        default: false,
+      })
+      .option('git', {
+        describe: '是否初始化git',
+        type: 'boolean',
+        default: false,
+      })
+      .example('$0 --install', chalk.yellow('创建项目后npm install'))
+      .example('$0 --git', chalk.yellow('创建项目后 git init'))
+      .example('$0 --template remax_mini', chalk.yellow('直接选择模板创建'))
+      .help('h')
+      .alias('h', 'help').argv
 
-figlet('MY_CLI', function (err, data) {
-  if (err) {
-    console.log('Something went wrong...')
-    console.dir(err)
-    return
-  }
-  console.log(data)
-})
-
-function parseArgumentsIntoOptions(rawArgs) {
-  const args = arg(
-    {
-      '--git': Boolean,
-      '--yes': Boolean,
-      '--install': Boolean,
-      '-g': '--git',
-      '-y': '--yes',
-      '-i': '--install',
-    },
-    {
-      argv: rawArgs.slice(2),
-    }
-  )
   return {
-    skipPrompts: args['--yes'] || false,
-    git: args['--git'] || false,
-    template: args._[0],
-    runInstall: args['--install'] || false,
+    git: argv.git,
+    template: argv.template,
+    install: argv.install,
   }
 }
 
 async function promptForMissingOptions(options) {
   const defaultTemplate = 'JavaScript'
-  if (options.skipPrompts) {
-    return {
-      ...options,
-      template: options.template || defaultTemplate,
-    }
-  }
 
   const questions = []
   if (!options.template) {
     questions.push({
       type: 'list',
       name: 'template',
-      message: 'Please choose which project template to use',
-      choices: ['JavaScript', 'TypeScript'],
+      message: '请选择项目模板',
+      choices: templateList,
       default: defaultTemplate,
     })
   }
@@ -61,7 +56,16 @@ async function promptForMissingOptions(options) {
     questions.push({
       type: 'confirm',
       name: 'git',
-      message: 'Initialize a git repository?',
+      message: '是否初始git',
+      default: false,
+    })
+  }
+
+  if (!options.install) {
+    questions.push({
+      type: 'confirm',
+      name: 'install',
+      message: 'run yarn install now',
       default: false,
     })
   }
@@ -69,13 +73,13 @@ async function promptForMissingOptions(options) {
   const answers = await inquirer.prompt(questions)
   return {
     ...options,
-    template: options.template || answers.template,
-    git: options.git || answers.git,
+    ...answers,
   }
 }
 
 export async function cli(args) {
-  let options = parseArgumentsIntoOptions(args)
+  let options = parseArgvIntoOptions(args)
   options = await promptForMissingOptions(options)
   await createProject(options)
+  console.log(chalk.green('创建成功 啦啦啦啦'))
 }

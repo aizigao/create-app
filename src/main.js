@@ -10,12 +10,23 @@ import { projectInstall } from 'pkg-install'
 const access = promisify(fs.access)
 const copy = promisify(ncp)
 
+/**
+ * 复制项目
+ * @param {*} options
+ * @returns
+ */
 async function copyTemplateFiles(options) {
   return copy(options.templateDirectory, options.targetDirectory, {
     clobber: false,
   })
 }
 
+/**
+ *
+ * 初始化git
+ * @param {*} options
+ * @returns
+ */
 async function initGit(options) {
   const result = await execa('git', ['init'], {
     cwd: options.targetDirectory,
@@ -23,9 +34,13 @@ async function initGit(options) {
   if (result.failed) {
     return Promise.reject(new Error('Failed to initialize git'))
   }
-  return
 }
 
+/**
+ * 创建app
+ * @param {*} options
+ * @returns
+ */
 export async function createProject(options) {
   options = {
     ...options,
