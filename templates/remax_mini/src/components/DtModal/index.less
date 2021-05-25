@@ -1,0 +1,133 @@
+.curtainWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0);
+  &__entering {
+    transform: scale(0);
+  }
+  &__entered {
+    transform: scale(1);
+    transition: transform 300ms ease-out;
+  }
+  &__exiting {
+    transform: scale(0);
+    transition: transform 300ms ease-out;
+  }
+  &__exited {
+    transform: scale(0.1);
+  }
+}
+
+.bg {
+  position: absolute;
+  left: -999px;
+  right: -999px;
+  top: -999px;
+  bottom: -999px;
+  z-index: 1;
+}
+.dtModalRoot {
+  position: relative;
+  z-index: 2;
+  .bizTopImg {
+    position: absolute;
+    width: 238px;
+    height: 208px;
+    margin-left: -119px;
+    z-index: 3;
+    left: 50%;
+    top: -100px;
+  }
+}
+.dtModal {
+  overflow: hidden;
+  width: 560px;
+  min-height: 350px;
+  border-radius: 16px;
+  background-color: #fff;
+  box-sizing: border-box;
+  position: relative;
+  padding-bottom: 46px;
+  display: flex;
+  flex-direction: column;
+
+  &.dtModalBiz {
+    .body {
+      padding-top: 144px;
+    }
+  }
+  .body {
+    background-image: url("/images/svgs/modal-bg.svg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    border-radius: 16px;
+    flex: 1;
+  }
+  .title {
+    height: 59px;
+    font-size: 42px;
+    font-weight: 500;
+    color: #333333;
+    line-height: 59px;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .content {
+    width: 428px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 44px;
+    margin: 0 auto;
+  }
+  .btnWrap {
+    display: flex;
+    margin: 24px 24px 0 24px;
+    .cancelBtn {
+      flex: 1;
+      border-radius: 40px;
+      border: 2px solid #e9c28f;
+      font-size: 30px;
+      font-weight: 400;
+      color: #9c6614;
+      height: 80px;
+      line-height: 80px;
+      margin-right: 24px;
+    }
+    .comfirmBtn {
+      flex: 1;
+      background: linear-gradient(296deg, #ffe3ba 0%, #e6bf8b 100%);
+      border-radius: 49px;
+      font-size: 30px;
+      font-weight: 400;
+      color: #9c6614;
+
+      height: 80px;
+      line-height: 80px;
+    }
+    &.btnWrapSingle {
+      margin: 24px 50px 0 50px;
+      .comfirmBtn {
+        height: 88px;
+        line-height: 88px;
+        font-size: 36px;
+      }
+    }
+  }
+}
+
+.close {
+  position: absolute;
+  margin-left: -55px;
+  margin-right: 0;
+  padding: 25px;
+  bottom: -138px;
+  left: 50%;
+
+  .closeIcon {
+    font-size: 60px;
+    line-height: 60px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}

@@ -1,0 +1,175 @@
+.app {
+  text-align: center;
+  padding: 0 24px;
+  background-color: #f0f0f0;
+  min-height: 100vh;
+  .counponCellHeaderTag {
+    .money {
+      font-size: 30px;
+      font-weight: 500;
+      color: #ff5d2c;
+      line-height: 70px;
+      background: linear-gradient(187deg, #fde1c5 0%, #b59167 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      .number {
+        font-size: 40px;
+        font-family: 'Alibaba-PuHuiTi-Medium';
+      }
+    }
+    .desc {
+      margin-top: 3px;
+      font-size: 22px;
+      color: #585048;
+      line-height: 30px;
+    }
+  }
+  .couponList {
+    display: grid;
+    padding: 24px 24px 30px;
+    grid-template-columns: auto auto;
+    row-gap: 13px;
+    column-gap: 16px;
+    .couponListItem {
+      height: 122px;
+      width: 315px;
+      align-items: center;
+      background: url("/images/svgs/rights_ph_left.svg") center/cover 
+        no-repeat;
+      &:nth-child(even) {
+        background: url("/images/svgs/right_ph_right.svg") center/cover 
+          no-repeat;
+      }
+      display: flex;
+      justify-content: space-between;
+      .left {
+        flex-basis: 133px;
+        flex-grow: 0;
+        text-align: center;
+        .title {
+          font-size: 24px;
+          font-weight: 500;
+          line-height: 33px;
+          height: 48px;
+          display: inline-block;
+          color: transparent;
+          vertical-align: text-bottom;
+          background: linear-gradient(187deg, #e6ab5d 0%, #a47e41 100%);
+          -webkit-background-clip: text;
+          .number {
+            font-family: Alibaba-PuHuiTi-Medium;
+            font-size: 44px;
+            line-height: 44px;
+          }
+        }
+        .subTitle {
+          font-size: 20px;
+          color: #b9946c;
+          line-height: 28px;
+        }
+      }
+      .right {
+        flex: 1;
+        padding-left: 15px;
+        text-align: left;
+        .title {
+          font-size: 26px;
+          margin-bottom: 10px;
+          font-weight: 500;
+          color: #594323;
+          line-height: 37px;
+        }
+        .subTitle {
+          font-size: 22px;
+          color: #b9946c;
+          line-height: 30px;
+        }
+      }
+    }
+  }
+  .rightsList {
+    padding: 24px 24px 30px;
+    display: grid;
+    grid-template-columns: repeat(3, calc((100% - 5px - 24px) / 3));
+    row-gap: 16px;
+    column-gap: 13px;
+    .rightsListItem {
+      background: #f6f6f6;
+      position: relative;
+      border-radius: 11px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 24px;
+      .leftBlock {
+        position: absolute;
+        min-width: 134px;
+        height: 36px;
+        padding: 0 23px;
+        top: 0;
+        left: 0;
+        line-height: 36px;
+        box-sizing: border-box;
+        background: url("/images/svgs/rectLeft.svg") no-repeat;
+        background-size: 100%, 100%;
+        border-radius: 11px 0px 11px 0px;
+        font-size: 20px;
+        color: #9d8b6d;
+      }
+      .itemIcon {
+        width: 94px;
+        height: 94px;
+        margin: 43px 0 13px 0;
+      }
+      .title {
+        font-size: 26px;
+        font-weight: 600;
+        color: #514941;
+        line-height: 37px;
+      }
+      .subTitle {
+        margin-top: 4px;
+        font-size: 32px;
+        font-weight: 700;
+        color: #514941;
+        line-height: 38px;
+      }
+      .confirmBtn {
+        margin-top: 20px;
+        background: linear-gradient(226deg, #33363c 0%, #191b1f 100%);
+        border-radius: 27px;
+        font-size: 24px;
+        font-weight: 500;
+        color: #f8dcb3;
+        line-height: 33px;
+        padding: 11px 28px;
+      }
+    }
+    &.rightsListItemAlipayCardStateUseable {
+      .rightsListItem {
+        .itemIcon {
+          margin: 24px 0 13px 0;
+        }
+      }
+    }
+  }
+  .bottomDesc {
+    text-align: center;
+    .company {
+      font-size: 26px;
+      color: #333333;
+      opacity: 0.4;
+      line-height: 37px;
+      margin-bottom: 20px;
+    }
+    .phone {
+      font-size: 24px;
+      color: #333333;
+      line-height: 33px;
+      padding-bottom: 40px;
+      .phoneNumber {
+        text-decoration: underline;
+      }
+    }
+  }
+}

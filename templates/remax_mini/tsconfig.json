@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "jsx": "preserve",
+    "rootDir": "src",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"],
+      "*": [ "./typings/*" ]
+    },
+    "lib": ["DOM", "ES2015"],
+    "types" : ["mini-types"]
+  },
+  "include": ["src/**/*", "typings/**/*"]
+}

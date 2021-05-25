@@ -1,0 +1,30 @@
+.loadingCont {
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  padding: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  background-color: white;
+
+  .cont {
+    margin-top: 88px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    color: #000;
+  }
+  &.dark {
+    background-color: #262626;
+    .cont {
+      color: #eee;
+    }
+  }
+}
