@@ -6,3 +6,9 @@
 ```bash
 npx @aizigao/create-app
 ```
+
+## help
+
+```bash
+npx @aizigao/create-app -h
+```

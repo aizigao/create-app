@@ -29,6 +29,7 @@ function parseArgvIntoOptions(rawArgs) {
       .example('$0 --install', chalk.yellow('创建项目后npm install'))
       .example('$0 --git', chalk.yellow('创建项目后 git init'))
       .example('$0 --template remax_mini', chalk.yellow('直接选择模板创建'))
+      .alias('v', 'version')
       .help('h')
       .alias('h', 'help').argv
 
