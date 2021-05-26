@@ -1,7 +1,7 @@
 import yargs from 'yargs/yargs'
 import inquirer from 'inquirer'
 import chalk from 'chalk'
-import dayjs from 'dayjs'
+// import dayjs from 'dayjs'
 import { createProject } from './main'
 import { templateList } from './config'
 
@@ -58,7 +58,7 @@ async function promptForMissingOptions(options) {
     type: 'string',
     name: 'name',
     message: '项目名称',
-    default: '项目' + '_' + dayjs().format('YYYY_MM_DD'),
+    default: 'test_project',
   })
 
   questions.push({

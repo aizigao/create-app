@@ -54,21 +54,18 @@ async function renderTpl(options) {
  * @returns
  */
 async function initGit(options) {
-  const result = await execa('git', ['init'], {
-    cwd: options.targetDirectory,
-  })
-  // .then(() => {
-  //   return execa('git', ['add', '.'], {
-  //     cwd: options.targetDirectory,
-  //   })
-  // })
-  // .then(() => {
-  //   return execa('git', ['commit -m "feat: init project"'], {
-  //     cwd: options.targetDirectory,
-  //   })
-  // })
-  if (result.failed) {
-    return Promise.reject(new Error('Failed to initialize git'))
+  const commands = [
+    ['git', ['init']],
+    ['git', ['add', '.']],
+    ['git', ['commit', '-m', 'feat: created by @aizigao/create-app']],
+  ]
+  for (const command of commands) {
+    const result = await execa(...command, {
+      cwd: options.targetDirectory,
+    })
+    if (result.failed) {
+      return Promise.reject(new Error('Failed to initialize git'))
+    }
   }
 }
 
