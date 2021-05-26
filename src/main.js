@@ -28,7 +28,7 @@ async function copyTemplateFiles(options) {
 async function renderTpl(options) {
   const hbsFiles = []
   /**
-   * 遍历所有文件
+   * 遍历所有文件, 找到.hbs 的文件，然后render
    */
   for await (const file of klaw(options.targetDirectory, {
     filter: filterFunc,
