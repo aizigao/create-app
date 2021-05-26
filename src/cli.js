@@ -100,4 +100,5 @@ export async function cli(args) {
   let options = parseArgvIntoOptions(args)
   options = await promptForMissingOptions(options)
   await createProject(options)
+  process.exit(0)
 }

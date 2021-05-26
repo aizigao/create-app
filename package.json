@@ -1,12 +1,12 @@
 {
   "name": "@aizigao/create-app",
   "version": "0.0.3",
-  "description": "create app presonally",
+  "description": "create app personally",
   "keywords": [
     "create app",
     "template"
   ],
-  "main": "src/index.js",
+  "main": "src/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/aizigao/create-app"
