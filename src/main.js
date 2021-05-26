@@ -25,6 +25,9 @@ async function copyTemplateFiles(options) {
   })
 }
 
+/**
+ * 模板渲染
+ */
 async function renderTpl(options) {
   const hbsFiles = []
   /**
@@ -70,7 +73,7 @@ async function initGit(options) {
 }
 
 /**
- * 创建app
+ * 创建app 主入口
  * @param {*} options
  * @returns
  */

@@ -1,10 +1,12 @@
 import yargs from 'yargs/yargs'
 import inquirer from 'inquirer'
 import chalk from 'chalk'
-// import dayjs from 'dayjs'
 import { createProject } from './main'
-import { templateList } from './config'
+import { templateList, defaultTemplate } from './config'
 
+/**
+ * 格式化 argv
+ */
 function parseArgvIntoOptions(rawArgs) {
   const argv =
     // --
@@ -40,9 +42,10 @@ function parseArgvIntoOptions(rawArgs) {
   }
 }
 
+/**
+ * 待用户确认与选择参数
+ */
 async function promptForMissingOptions(options) {
-  const defaultTemplate = 'JavaScript'
-
   const questions = []
   if (!options.template) {
     questions.push({
