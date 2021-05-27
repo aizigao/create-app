@@ -1,5 +1,6 @@
 import yargs from 'yargs/yargs'
 import inquirer from 'inquirer'
+import path from 'path'
 import chalk from 'chalk'
 import { createProject } from './main'
 import { templateList, defaultTemplate } from './config'
@@ -11,7 +12,7 @@ function parseArgvIntoOptions(rawArgs) {
   const argv =
     // --
     yargs(rawArgs)
-      .usage('Usage: $0 [options]')
+      .usage('Usage: $0 [options...] [folder-name]')
       .option('template', {
         describe: '项目模板名称',
         alias: 't',
@@ -39,6 +40,7 @@ function parseArgvIntoOptions(rawArgs) {
     git: argv.git,
     template: argv.template,
     install: argv.install,
+    targetDirectory: argv._[0] && path.join(process.cwd(), argv._[0]),
   }
 }
 

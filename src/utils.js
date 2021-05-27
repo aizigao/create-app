@@ -11,3 +11,7 @@ export const filterFunc = (item) => {
   const basename = path.basename(item)
   return basename === '.' || basename[0] !== '.'
 }
+
+export const fixPath = (source) => {
+  return path.isAbsolute(source) ? source : path.join(process.cwd(), source)
+}
