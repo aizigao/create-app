@@ -2,6 +2,7 @@ import yargs from 'yargs/yargs'
 import inquirer from 'inquirer'
 import path from 'path'
 import chalk from 'chalk'
+import _ from 'lodash'
 import { createProject } from './main'
 import { templateList, defaultTemplate } from './config'
 
@@ -22,12 +23,10 @@ function parseArgvIntoOptions(rawArgs) {
       .option('install', {
         describe: '初始后立即 npm install',
         type: 'boolean',
-        default: false,
       })
       .option('git', {
         describe: '是否初始化git',
         type: 'boolean',
-        default: false,
       })
       .example('$0 --install', chalk.yellow('创建项目后npm install'))
       .example('$0 --git', chalk.yellow('创建项目后 git init'))
@@ -49,7 +48,7 @@ function parseArgvIntoOptions(rawArgs) {
  */
 async function promptForMissingOptions(options) {
   const questions = []
-  if (!options.template) {
+  if (_.isNil(options.template)) {
     questions.push({
       type: 'list',
       name: 'template',
@@ -73,7 +72,7 @@ async function promptForMissingOptions(options) {
     default: '由@aizigao/create-app 创建',
   })
 
-  if (!options.git) {
+  if (_.isNil(options.git)) {
     questions.push({
       type: 'confirm',
       name: 'git',
@@ -82,7 +81,7 @@ async function promptForMissingOptions(options) {
     })
   }
 
-  if (!options.install) {
+  if (_.isNil(options.install)) {
     questions.push({
       type: 'confirm',
       name: 'install',
@@ -101,6 +100,7 @@ async function promptForMissingOptions(options) {
 export async function cli(args) {
   let options = parseArgvIntoOptions(args)
   options = await promptForMissingOptions(options)
+
   await createProject(options)
   process.exit(0)
 }

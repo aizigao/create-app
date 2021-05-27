@@ -4,6 +4,10 @@ export const templateConfigList = [
     desc: 'reamx 小程序项目',
   },
   {
+    name: 'vanilla_mobile',
+    desc: 'vanilla mobile',
+  },
+  {
     name: 'test',
     desc: 'test 项目',
   },
